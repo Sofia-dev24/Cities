@@ -1,4 +1,5 @@
 from opencage.geocoder import OpenCageGeocode
+from tkinter import *
 
 
 def get_coordinates(city, key):
@@ -8,15 +9,33 @@ def get_coordinates(city, key):
         if results:
             lat = round(results[0]['geometry']['lat'], 3)
             lng = round(results[0]['geometry']['lng'], 3)
-            return lat, lng
+            return f"Широта: {lat}, Долгота: {lng}"
         else:
             print("Город не найден")
     except Exception as e:
         return f"Возникла ошибка: {e}"
 
 
-key = 'ded53afb91d247f0b95e30693ec37983'
-city = "Екатеринбург"
-coordinates = get_coordinates(city, key)
+def show_coordinates():
+    city = entry.get()
+    coordinates = get_coordinates(city, key)
+    label.config(text=f"Координаты города {city}:\n\n{coordinates}")
 
-print(f"Координаты города {city}: {coordinates}.")
+
+
+key = 'ded53afb91d247f0b95e30693ec37983'
+
+window = Tk()
+window.title("Координаты городов")
+window.geometry("360x120")
+
+entry = Entry()
+entry.pack()
+
+button = Button(text="Поиск координат", command=show_coordinates)
+button.pack()
+
+label = Label(text="Введите город и нажмите кнопку")
+label.pack()
+
+window.mainloop()
