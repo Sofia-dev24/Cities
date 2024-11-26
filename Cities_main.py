@@ -6,7 +6,9 @@ def get_coordinates(city, key):
         geocoder = OpenCageGeocode(key)
         results = geocoder.geocode(city, language="ru")
         if results:
-            return results[0]['geometry']['lat'], results[0]['geometry']['lng']
+            lat = round(results[0]['geometry']['lat'], 3)
+            lng = round(results[0]['geometry']['lng'], 3)
+            return lat, lng
         else:
             print("Город не найден")
     except Exception as e:
@@ -14,8 +16,7 @@ def get_coordinates(city, key):
 
 
 key = 'ded53afb91d247f0b95e30693ec37983'
-city = "London"
+city = "Екатеринбург"
 coordinates = get_coordinates(city, key)
 
 print(f"Координаты города {city}: {coordinates}.")
-
